@@ -1,0 +1,12 @@
+bundle:
+  name: databricks_practice_DAB
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: ${env.DATABRICKS_HOST}
