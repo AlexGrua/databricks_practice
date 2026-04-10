@@ -143,7 +143,7 @@ bronze_ingestion → silver_ingestion
 ```
  
 ### `gold_pipeline`
-Триггер: обновление таблицы `pipeline_1.silver.silver_events`.
+Триггер: обновление таблицы `pipeline_1.silver.silver_events`
 ```
 gold_aggregation
 ```
