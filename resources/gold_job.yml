@@ -1,0 +1,22 @@
+resources:
+  jobs:
+    Turbines_04_Gold:
+      name: Turbines_04_Gold
+      trigger:
+        pause_status: PAUSED
+        table_update:
+          table_names:
+            - pipeline_1.silver.silver_events
+      tasks:
+        - task_key: gold_aggregation
+          notebook_task:
+            notebook_path: ../src/04_gold.py
+            source: WORKSPACE
+          max_retries: 2
+          min_retry_interval_millis: 30000
+          disable_auto_optimization: false
+      tags:
+        project: turbines
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
