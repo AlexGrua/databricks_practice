@@ -1,3 +1,4 @@
+# Databricks notebook source
 # создаём инфраструктуру (каталог, схема, volume)
 spark.sql("""
 CREATE CATALOG IF NOT EXISTS pipeline_1
