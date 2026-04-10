@@ -1,6 +1,9 @@
+# Databricks notebook source
 spark.sql("""
 CREATE SCHEMA IF NOT EXISTS pipeline_1.gold
 """)
+
+# COMMAND ----------
 
 SILVER_TABLE = "pipeline_1.silver.silver_events"
 CHECKPOINT_PATH = "/Volumes/pipeline_1/bronze/checkpoints_volume/gold_checkpoint"
@@ -9,6 +12,8 @@ GOLD_AVG = "pipeline_1.gold.metrics_avg"
 GOLD_MIN = "pipeline_1.gold.metrics_min"
 GOLD_MAX = "pipeline_1.gold.metrics_max"
 GOLD_STDDEV = "pipeline_1.gold.metrics_stddev"
+
+# COMMAND ----------
 
 from pyspark.sql.types import NumericType
 from pyspark.sql.functions import window, avg, min, max, stddev, current_timestamp, col, expr
@@ -22,10 +27,14 @@ numeric_cols = [
     and field.name not in ("device_id",)
 ]
 
+# COMMAND ----------
+
 df_silver = (
     spark.readStream
     .table(SILVER_TABLE)
 )
+
+# COMMAND ----------
 
 def write_to_gold(microBatchDF, batchId):
     from pyspark.sql.functions import window, avg, min, max, stddev, current_timestamp, col, expr
@@ -70,6 +79,8 @@ def write_to_gold(microBatchDF, batchId):
                 .whenNotMatchedInsertAll()
                 .execute()
             )
+
+# COMMAND ----------
 
 (
     df_silver
