@@ -1,0 +1,21 @@
+resources:
+  jobs:
+    Turbines_02_Bronze:
+      name: Turbines_02_Bronze
+      schedule:
+        quartz_cron_expression: 0 0/2 * * * ?
+        timezone_id: Europe/Minsk
+        pause_status: PAUSED
+      tasks:
+        - task_key: bronze_ingestion
+          notebook_task:
+            notebook_path: ../src/01_bronze.py
+            source: WORKSPACE
+          max_retries: 2
+          min_retry_interval_millis: 120000
+          disable_auto_optimization: false
+      tags:
+        project: turbines
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
