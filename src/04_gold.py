@@ -41,7 +41,7 @@ def write_to_gold(microBatchDF, batchId):
     from delta.tables import DeltaTable
 
     safe_df = microBatchDF.filter(
-        col("event_time") < expr("current_timestamp() - INTERVAL 4 MINUTES")
+        col("event_time") < expr("current_timestamp() - INTERVAL 3 MINUTES")
     )
 
     agg_exprs_avg = [avg(c).alias(c) for c in numeric_cols]
