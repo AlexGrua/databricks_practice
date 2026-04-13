@@ -41,7 +41,7 @@ def write_to_gold(microBatchDF, batchId):
     from delta.tables import DeltaTable
 
     safe_df = microBatchDF.filter(
-        col("event_time") < expr("current_timestamp() - INTERVAL 2 MINUTES")
+        col("event_time") < expr("current_timestamp() - INTERVAL 4 MINUTES")
     )
 
     agg_exprs_avg = [avg(c).alias(c) for c in numeric_cols]
@@ -65,20 +65,7 @@ def write_to_gold(microBatchDF, batchId):
             .drop("window")
         )
 
-        if not spark.catalog.tableExists(table_name):
-            agg_df.write.format("delta").mode("append").saveAsTable(table_name)
-        else:
-            delta_table = DeltaTable.forName(spark, table_name)
-            (
-                delta_table.alias("target")
-                .merge(
-                    agg_df.alias("source"),
-                    "target.device_id = source.device_id AND target.window_start = source.window_start"
-                )
-                .whenMatchedUpdateAll()
-                .whenNotMatchedInsertAll()
-                .execute()
-            )
+        agg_df.write.format("delta").mode("append").saveAsTable(table_name)
 
 # COMMAND ----------
 
