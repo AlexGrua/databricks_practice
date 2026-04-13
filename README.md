@@ -148,6 +148,41 @@ bronze_ingestion → silver_ingestion
 gold_aggregation
 ```
 
+## Task 5. Databricks Medallion Pipeline (DAB + CI/CD)
+
+## Overview
+This project implements a **Medallion Architecture (Bronze → Silver → Gold)** using **Databricks Asset Bundles (DAB)** and **GitHub Actions** for CI/CD.
+
+All infrastructure (jobs, notebooks, schedules) is defined as code and deployed automatically to Databricks.
+
+---
+
+## Architecture
+
+- **Bronze**: Ingest raw data using Auto Loader
+- **Silver**: Transform and structure data (pivot, typing, filtering)
+- **Gold**: Aggregate data with time windows and lag handling
+
+---
+
+---
+
+## Key Concepts
+
+- **Infrastructure as Code** — jobs и пайплайн описаны в YAML
+- **Single Source of Truth** — Git
+- **CI/CD Deployment** — через GitHub Actions
+- **Isolated Runtime** — код исполняется из `.bundle`, а не из Workspace
+
+---
+
+## Notes
+
+- Notebook файлы должны быть в формате:
+  - `# Databricks notebook source`
+- Dev target отключает автоматические триггеры (по умолчанию)
+
+---
  
 
 
